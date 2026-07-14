@@ -35,7 +35,7 @@ SAVE_FREQ=${SAVE_FREQ:-20}
 TEST_FREQ=${TEST_FREQ:-5}
 
 PROJECT_NAME=${PROJECT_NAME:-verl_ppo_gsm8k_math}
-EXPERIMENT_NAME=${EXPERIMENT_NAME:-qwen3_8b_ppo_${INFER_BACKEND}_fsdp_$(date +%Y%m%d_%H%M)}
+EXPERIMENT_NAME=${EXPERIMENT_NAME:-qwen3_8b_ppo_${INFER_BACKEND}_fsdp}  # Originally qwen3_8b_ppo_${INFER_BACKEND}_fsdp_$(date +%Y%m%d_%H%M)
 
 GSM8K_TRAIN_FILE=${GSM8K_TRAIN_FILE:-$DATA_ROOT/gsm8k/train.parquet}
 GSM8K_TEST_FILE=${GSM8K_TEST_FILE:-$DATA_ROOT/gsm8k/test.parquet}
