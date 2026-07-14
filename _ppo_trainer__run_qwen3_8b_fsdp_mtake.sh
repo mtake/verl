@@ -116,9 +116,10 @@ eval "$cmd" 2>&1 | tee -a ${LOGFILE}
 #     --target_dir checkpoints/${trainer.project_name}/${trainer.experiment_name}/global_step_1/actor/huggingface
 #
 #PROJECT_NAME=verl_ppo_gsm8k_math
-#EXPERIMENT_NAME=qwen3_8b_ppo_vllm_fsdp_20260714_1057
-#LATEST_CHECKPOINTED_ITERATION=14
-#LATEST_CHECKPOINT_DIR="checkpoints/${PROJECT_NAME}/${EXPERIMENT_NAME}/global_step_${LATEST_CHECKPOINTED_ITERATION}"
+#EXPERIMENT_NAME=qwen3_8b_ppo_vllm_fsdp
+#EXPERIMENT_DIR="checkpoints/${PROJECT_NAME}/${EXPERIMENT_NAME}"
+#LATEST_CHECKPOINTED_ITERATION="$(cat ${EXPERIMENT_DIR}/latest_checkpointed_iteration.txt)"
+#LATEST_CHECKPOINT_DIR="${EXPERIMENT_DIR}/global_step_${LATEST_CHECKPOINTED_ITERATION}"
 #cmd="${ENV}python -m verl.model_merger merge --backend fsdp --local_dir ${LATEST_CHECKPOINT_DIR}/actor --target_dir ${LATEST_CHECKPOINT_DIR}/actor/huggingface"
 #echo "$cmd" | tee -a ${LOGFILE}
 #eval "$cmd" 2>&1 | tee -a ${LOGFILE}
