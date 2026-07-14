@@ -4,8 +4,8 @@
 
 set -xeuo pipefail
 
-DATA_ROOT=${DATA_ROOT:-$HOME/data-verl}
-LOGGER=${LOGGER:-console}  # '["console","wandb"]'
+DATA_ROOT=${DATA_ROOT:-$HOME/data-verl}  # Originally $HOME/data
+LOGGER=${LOGGER:-console}  # Originally '["console","wandb"]'
 
 ########################### user-adjustable ###########################
 # DEVICE is auto-detected by probing torch_npu; override only for special cases.
