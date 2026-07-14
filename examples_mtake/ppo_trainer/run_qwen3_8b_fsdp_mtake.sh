@@ -5,6 +5,7 @@
 set -xeuo pipefail
 
 DATA_ROOT=${DATA_ROOT:-$HOME/data-verl}
+LOGGER=${LOGGER:-console}  # '["console","wandb"]'
 
 ########################### user-adjustable ###########################
 # DEVICE is auto-detected by probing torch_npu; override only for special cases.
@@ -103,7 +104,7 @@ CRITIC=(
 TRAINER=(
     trainer.balance_batch=True
     trainer.critic_warmup=0
-    trainer.logger='["console","wandb"]'
+    trainer.logger=${LOGGER}
     trainer.project_name=${PROJECT_NAME}
     trainer.experiment_name=${EXPERIMENT_NAME}
     trainer.n_gpus_per_node=${n_devices_per_node}
