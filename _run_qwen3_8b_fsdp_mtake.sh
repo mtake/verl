@@ -45,15 +45,15 @@ if [[ -d "${VENV}" ]]; then
 fi
 
 # @@@ahoaho XXX
-# NOTE start Ray if not running.
-unset _RAY_STARTED
-if ! ray status > /dev/null 2>&1; then
-    echo "XXX Starting Ray..."
-    ray start --head
-    _RAY_STARTED=1
-else
-    echo "XXX Ray is already running."
-fi
+### NOTE start Ray if not running.
+##unset _RAY_STARTED
+##if ! ray status > /dev/null 2>&1; then
+##    echo "XXX Starting Ray..."
+##    ray start --head
+##    _RAY_STARTED=1
+##else
+##    echo "XXX Ray is already running."
+##fi
 
 ENV=""
 ENV="TOKENIZERS_PARALLELISM=false ${ENV}"
@@ -106,10 +106,10 @@ echo "$cmd" | tee -a ${LOGFILE}
 eval "$cmd" 2>&1 | tee -a ${LOGFILE}
 
 # @@@ahoaho XXX
-if [[ -n "${_RAY_STARTED}" ]]; then
-    echo "XXX Stopping Ray..."
-    ray stop
-fi
+##if [[ -n "${_RAY_STARTED}" ]]; then
+##    echo "XXX Stopping Ray..."
+##    ray stop
+##fi
 
 END_TIME="$(${DATE_CMD} +%s)"
 END_TIME_STR="$(${DATE_CMD} -d @${END_TIME} +%Y%m%d-%H%M%S)"
