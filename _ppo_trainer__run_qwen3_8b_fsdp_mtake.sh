@@ -86,7 +86,8 @@ fi
 # ENV="DATA_DIR=${HOME}/data/gsm8k ${ENV}"
 # @@@ahoaho XXX for functional test
 #ENV="MODEL_PATH=ibm-granite/granite-4.1-3b ${ENV}"  # default: Qwen/Qwen3-8B
-ENV="MODEL_PATH=Qwen/Qwen3-0.6B ${ENV}"  # default: Qwen/Qwen3-8B
+#ENV="MODEL_PATH=Qwen/Qwen3-8B ${ENV}"  # default: Qwen/Qwen3-8B, CUDA Error: out of memory at /workspace/csrc/cumem_allocator.cpp:62 with 1 node 8 gpus
+ENV="MODEL_PATH=Qwen/Qwen3-0.6B ${ENV}"  # default: Qwen/Qwen3-8B, OK with 1 node 8 gpus
 ENV="NDEVICES_PER_NODE=${NDEVICES_PER_NODE} ${ENV}"
 # @@@ahoaho XXX for functional test
 ENV="TOTAL_EPOCHS=${TOTAL_EPOCHS:-1} ${ENV}"  # default: 15
