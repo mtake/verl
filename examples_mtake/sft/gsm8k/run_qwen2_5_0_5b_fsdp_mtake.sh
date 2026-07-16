@@ -36,7 +36,6 @@ PROJECT_NAME=${PROJECT_NAME:-gsm8k-sft}
 EXPERIMENT_NAME=${EXPERIMENT_NAME:-gsm8k-sft-qwen2_5_0_5b}
 # ---- end user-adjustable ----
 
-# @@@ahoaho XXX
 nproc_per_node=${NPROC_PER_NODE:-8}
 save_path=${CKPTS_ROOT}/${PROJECT_NAME}/${EXPERIMENT_NAME}
 
