@@ -22,18 +22,18 @@ echo "XXX DATETIME ${START_TIME_STR}" | tee -a ${LOGFILE}
 
 # count gpus
 if command -v nvidia-smi >/dev/null 2>&1; then
-    NDEVICES_PER_NODE=$(nvidia-smi --list-gpus | wc -l)
+    NPROC_PER_NODE=$(nvidia-smi --list-gpus | wc -l)
 else
-    NDEVICES_PER_NODE=0
+    NPROC_PER_NODE=0
 fi
-echo "XXX NDEVICES_PER_NODE: ${NDEVICES_PER_NODE}" | tee -a ${LOGFILE}
+echo "XXX NPROC_PER_NODE: ${NPROC_PER_NODE}" | tee -a ${LOGFILE}
 
 # @@@ahoaho XXX
-#if (( NDEVICES_PER_NODE == 0 )); then
+#if (( NPROC_PER_NODE == 0 )); then
 #    echo "ERROR: A GPU is required to run this command. Exiting..." | tee -a ${LOGFILE}
 #    exit 1
 #fi
-if (( NDEVICES_PER_NODE < 8 )); then
+if (( NPROC_PER_NODE < 8 )); then
     echo "ERROR: 8 GPUs are required to run this command. Exiting..." | tee -a ${LOGFILE}
     exit 1
 fi
@@ -84,13 +84,9 @@ ENV="TORCH_NCCL_ASYNC_ERROR_HANDLING=1 ${ENV}"
 fi
 
 # ENV="DATA_ROOT=${HOME}/data-verl ${ENV}"
-# @@@ahoaho XXX for functional test
-#ENV="MODEL_PATH=ibm-granite/granite-4.1-3b ${ENV}"  # default: Qwen/Qwen3-8B
-#ENV="MODEL_PATH=Qwen/Qwen3-8B ${ENV}"  # default: Qwen/Qwen3-8B, CUDA Error: out of memory at /workspace/csrc/cumem_allocator.cpp:62 with 1 node 8 gpus
-ENV="MODEL_PATH=Qwen/Qwen3-0.6B ${ENV}"  # default: Qwen/Qwen3-8B, OK with 1 node 8 gpus
-ENV="NDEVICES_PER_NODE=${NDEVICES_PER_NODE} ${ENV}"
-# @@@ahoaho XXX for functional test
-ENV="TOTAL_EPOCHS=${TOTAL_EPOCHS:-1} ${ENV}"  # default: 15
+# ENV="MODEL_PATH=ibm-granite/granite-4.1-3b ${ENV}"  # default: Qwen/Qwen2.5-0.5B-Instruct
+ENV="NPROC_PER_NODE=${NPROC_PER_NODE} ${ENV}"
+# ENV="TOTAL_EPOCHS=${TOTAL_EPOCHS:-1} ${ENV}"  # default: 1
 # ENV="LOGGER=mlflow ${ENV}"
 # ENV="INFER_BACKEND=vllm ${ENV}"
 
@@ -101,8 +97,8 @@ env 2>&1 | tee -a ${LOGFILE}
 echo "============================================================" | tee -a ${LOGFILE}
 
 # @@@ahoaho XXX
-#cmd="${ENV}bash examples/ppo_trainer/run_qwen3_8b_fsdp.sh"
-cmd="${ENV}bash examples_mtake/ppo_trainer/run_qwen3_8b_fsdp_mtake.sh"
+#cmd="${ENV}bash examples/sft/gsm8k/run_qwen2_5_0_5b_fsdp.sh"
+cmd="${ENV}bash examples_mtake/sft/gsm8k/run_qwen2_5_0_5b_fsdp_mtake.sh"
 echo "$cmd" | tee -a ${LOGFILE}
 eval "$cmd" 2>&1 | tee -a ${LOGFILE}
 
@@ -118,12 +114,12 @@ eval "$cmd" 2>&1 | tee -a ${LOGFILE}
 #     --local_dir checkpoints/${trainer.project_name}/${trainer.experiment_name}/global_step_1/actor \
 #     --target_dir checkpoints/${trainer.project_name}/${trainer.experiment_name}/global_step_1/actor/huggingface
 #
-#PROJECT_NAME=verl_ppo_gsm8k_math
-#EXPERIMENT_NAME=qwen3_8b_ppo_vllm_fsdp
-#EXPERIMENT_DIR="checkpoints/${PROJECT_NAME}/${EXPERIMENT_NAME}"
+#PROJECT_NAME=gsm8k-sft
+#EXPERIMENT_NAME=gsm8k-sft-qwen2_5_0_5b
+#EXPERIMENT_DIR="${CKPTS_ROOT}/${PROJECT_NAME}/${EXPERIMENT_NAME}"
 #LATEST_CHECKPOINTED_ITERATION="$(cat ${EXPERIMENT_DIR}/latest_checkpointed_iteration.txt)"
 #LATEST_CHECKPOINT_DIR="${EXPERIMENT_DIR}/global_step_${LATEST_CHECKPOINTED_ITERATION}"
-#cmd="${ENV}python -m verl.model_merger merge --backend fsdp --local_dir ${LATEST_CHECKPOINT_DIR}/actor --target_dir ${LATEST_CHECKPOINT_DIR}/actor/huggingface"
+#cmd="${ENV}python -m verl.model_merger merge --backend fsdp --local_dir ${LATEST_CHECKPOINT_DIR} --target_dir ${LATEST_CHECKPOINT_DIR}/huggingface"
 #echo "$cmd" | tee -a ${LOGFILE}
 #eval "$cmd" 2>&1 | tee -a ${LOGFILE}
 
