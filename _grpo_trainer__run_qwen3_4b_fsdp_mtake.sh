@@ -86,7 +86,8 @@ fi
 # ENV="DATA_ROOT=${HOME}/data-verl ${ENV}"
 # @@@ahoaho XXX for functional test
 #ENV="MODEL_PATH=ibm-granite/granite-4.1-3b ${ENV}"  # default: Qwen/Qwen3-4B
-#ENV="MODEL_PATH=Qwen/Qwen3-4B ${ENV}"  # default: Qwen/Qwen3-4B
+#ENV="MODEL_PATH=Qwen/Qwen3.5-0.8B ${ENV}"  # default: Qwen/Qwen3-4B, ERR missing generation_config.json, transformers 4.56.1 could be too old
+#ENV="MODEL_PATH=Qwen/Qwen3-4B ${ENV}"  # default: Qwen/Qwen3-4B, OK? with 1 node 8 gpus
 ENV="MODEL_PATH=Qwen/Qwen3-0.6B ${ENV}"  # default: Qwen/Qwen3-4B, OK with 1 node 8 gpus
 ENV="NGPUS_PER_NODE=${NGPUS_PER_NODE} ${ENV}"
 # @@@ahoaho XXX for functional test
