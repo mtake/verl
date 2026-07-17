@@ -93,7 +93,9 @@ ENV="NGPUS_PER_NODE=${NGPUS_PER_NODE} ${ENV}"
 # @@@ahoaho XXX for functional test
 ENV="TOTAL_EPOCHS=${TOTAL_EPOCHS:-1} ${ENV}"  # default: 15
 # ENV="LOGGER=mlflow ${ENV}"
+# @@@ahoaho XXX
 # ENV="INFER_BACKEND=vllm ${ENV}"
+# ENV="INFER_BACKEND=sglang ${ENV}"  # default: vllm, For Agentic RL, see https://verl.readthedocs.io/en/latest/start/agentic_rl.html
 
 # ENV="CKPTS_ROOT=${HOME}/ckpts-verl ${ENV}"
 
