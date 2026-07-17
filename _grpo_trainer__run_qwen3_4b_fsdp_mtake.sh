@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #
-# WIP with 8 GPUs
+# OK with 8 GPUs
 #
 
 # for macOS
@@ -87,7 +87,7 @@ fi
 # @@@ahoaho XXX for functional test
 #ENV="MODEL_PATH=ibm-granite/granite-4.1-3b ${ENV}"  # default: Qwen/Qwen3-4B
 #ENV="MODEL_PATH=Qwen/Qwen3-4B ${ENV}"  # default: Qwen/Qwen3-4B
-ENV="MODEL_PATH=Qwen/Qwen3-0.6B ${ENV}"  # default: Qwen/Qwen3-4B
+ENV="MODEL_PATH=Qwen/Qwen3-0.6B ${ENV}"  # default: Qwen/Qwen3-4B, OK with 1 node 8 gpus
 ENV="NGPUS_PER_NODE=${NGPUS_PER_NODE} ${ENV}"
 # @@@ahoaho XXX for functional test
 ENV="TOTAL_EPOCHS=${TOTAL_EPOCHS:-1} ${ENV}"  # default: 15
