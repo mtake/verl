@@ -13,6 +13,27 @@
 #    start_epoch = global_step // self.steps_per_epoch
 #                  ~~~~~~~~~~~~^^~~~~~~~~~~~~~~~~~~~~~
 #   ZeroDivisionError: integer division or modulo by zero
+#
+#   self.steps_per_epoch = len(self.train_dataloader)
+#
+#   self.train_dataloader = StatefulDataLoader(
+#       dataset=self.train_dataset,
+#       batch_size=self.train_batch_size_per_dp,
+#       sampler=self.train_sampler,
+#       collate_fn=self.collate_fn,
+#       num_workers=self.config.data.num_workers,
+#       pin_memory=False,
+#       drop_last=True,
+#       pin_memory_device=device_name,
+#   )
+#
+#  According to the [documentation](https://meta-pytorch.org/data/beta/torchdata.stateful_dataloader.html),
+#  len(self.train_dataloader) can be zero for small datasets. In this example, train dataset includes only 2 records.
+#
+#  len(dataloader) heuristic is based on the length of the sampler used. When dataset is an IterableDataset, it instead returns an estimate based on len(dataset) / batch_size, with proper rounding depending on drop_last, regardless of multi-process loading configurations. This represents the best guess PyTorch can make because PyTorch trusts user dataset code in correctly handling multi-process loading to avoid duplicate data.
+#  However, if sharding results in multiple workers having incomplete last batches, this estimate can still be inaccurate, because (1) an otherwise complete batch can be broken into multiple ones and (2) more than one batch worth of samples can be dropped when drop_last is set. Unfortunately, PyTorch can not detect such cases in general.
+#  See Dataset Types for more details on these two types of datasets and how IterableDataset interacts with Multi-process data loading.
+#
 
 # for macOS
 if command -v gdate &> /dev/null
